@@ -5,15 +5,15 @@ let topLeft = new Point3(-1, 1, 0)
 let bottomRight = new Point3(1, -1, 0)
 
 const squareVertices = [
-    [ // first triangle
-        topLeft, // top left
-        bottomRight, // bottom right
-        new Point3(1, 1, 0), // top right
+    [
+        new Point3(-1, 1, 0),
+        new Point3(1, 1, 0),
+        new Point3(-1, -1, 0)
     ],
-    [ // second triangle
-        bottomRight, // bottom right
-        topLeft, // top left
-        new Point3(-1, 1, 0), // bottom left
+    [
+        new Point3(-1, -1, 0),
+        new Point3(1, 1, 0),
+        new Point3(1, -1, 0)
     ]
 ]
 
@@ -25,6 +25,7 @@ export class Square extends Component {
                 point3.mult(size)
             })
         })
+        console.log(thisSquareVertices)
         super(position, thisSquareVertices)
         this.position = position
         this.size = size
