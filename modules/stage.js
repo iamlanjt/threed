@@ -38,7 +38,7 @@ function checkAllIntersections(origin, components, r) {
                 let p2 = intersection[2]
                 let dist = calculateDistance(origin, new Point3(p0, p1, p2))
                 if (finished === null || dist < finished[0]) {
-                    finished = [dist]
+                    finished = [dist, intersection]
                 }
             }
         })
@@ -65,11 +65,13 @@ export class Stage {
             for (let IX = 0; IX < resX; IX++) {
                 let originX = (IX-resolution[0])/resolution[0] // IX
                 let originY = (IY-resolution[1])/resolution[1] // IY
-                let thisDir = new Point3(originX, originY, viewDepth)
+                let thisDir = new Point3(originX, originY, viewDepth).add(camera.rot)
                 const thisRay = new Ray(camera.position.array, thisDir.array)
                 let thisRayHit = checkAllIntersections(camera.position, this.components, thisRay)
                 if (thisRayHit) {
-                    zeros_stream.set(IX, IY, 255)
+                    let h = thisRayHit[1]
+                    let p = new Point3(h[0],h[1],h[2])
+                    zeros_stream.set(IX, IY, (255-((calculateDistance(p, camera.position))*10)))
                 }
             }
         }
